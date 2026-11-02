@@ -33,11 +33,16 @@ h1:hover{animation:wob .5s steps(3)}
 .sub{font:italic 700 clamp(1.6rem,4.5vw,3.2rem)/.95 "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.02em;transform:rotate(-2deg)}
 .tag{display:inline-block;background:var(--acid);color:var(--pine);padding:.45rem .95rem;margin-top:.8rem;transform:rotate(-1.5deg);font:700 1.05rem/1.1 "Barlow Condensed",sans-serif;letter-spacing:.04em;text-transform:uppercase}
 .fish{width:min(46vw,380px);flex:none}
-/* marquee */
-.mq{background:var(--acid);color:var(--pine);overflow:hidden;white-space:nowrap;padding:.6rem 0;transform:rotate(-1deg);margin:0 -2rem}
-.mq div{display:inline-block;animation:mq 28s linear infinite}
-.mq span{font:700 1.25rem/1 "Barlow Condensed",sans-serif;letter-spacing:.12em;text-transform:uppercase;margin-right:2.5rem}
+/* marquee — portfolio-inspired dual track */
+.mq-wrap{margin:0;padding:0}
+.mq{background:var(--acid);color:var(--pine);overflow:hidden;white-space:nowrap;padding:.75rem 0;transform:rotate(-1deg);margin:0 -2rem;border-top:3px solid var(--pine);border-bottom:3px solid var(--pine)}
+.mq.mq-rev{background:var(--pine);color:var(--acid);transform:rotate(1deg);margin-top:.35rem;border-color:var(--acid)}
+.mq .mt{display:inline-block;animation:mq 24s linear infinite;will-change:transform}
+.mq.mq-rev .mt{animation-name:mq-rev;animation-duration:28s}
+.mq span{font:700 1.2rem/1 "Barlow Condensed",sans-serif;letter-spacing:.14em;text-transform:uppercase;margin-right:2.2rem}
 @keyframes mq{to{transform:translateX(-50%)}}
+@keyframes mq-rev{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.mq{font-size:1.05rem}
 /* about */
 .about{display:grid;grid-template-columns:1fr;gap:2rem;max-width:1200px;margin:auto}
 .about p.big{font:700 clamp(2.4rem,6.5vw,5.2rem)/.92 "Barlow Condensed",sans-serif;letter-spacing:-.025em;text-transform:uppercase;max-width:22ch}
@@ -51,16 +56,16 @@ h1:hover{animation:wob .5s steps(3)}
 /* schedule */
 h2{font-size:clamp(4rem,15vw,12rem);margin-bottom:2rem;letter-spacing:-.03em;line-height:.8}
 .sched{max-width:1200px;margin:auto}
-.row{display:grid;grid-template-columns:minmax(7rem,14rem) 1fr;gap:1rem 2rem;padding:1.4rem 0;border-top:3px solid var(--acid);align-items:baseline}
+.row{position:relative;display:grid;grid-template-columns:minmax(7rem,14rem) 1fr;gap:1rem 2rem;padding:1.5rem 0;border-top:3px solid var(--acid);align-items:baseline;overflow:hidden;transition:color .35s,padding .35s}
 .row:last-child{border-bottom:3px solid var(--acid)}
 .row .t{font:700 .95rem/1 "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
 .row h3{font:400 clamp(2.8rem,8.5vw,6.5rem)/.85 "League Gothic","Impact",sans-serif;text-transform:uppercase;letter-spacing:-.02em;transform:skewX(-6deg)}
 .row p{grid-column:2;color:var(--paper);max-width:60ch}
-.row:hover{background:var(--acid);color:var(--pine)}
+.row::before{content:"";position:absolute;inset:0;background:var(--acid);transform:scaleY(0);transform-origin:bottom;transition:transform .4s cubic-bezier(.7,0,.2,1);z-index:0}.row>*{position:relative;z-index:1}.row:hover{color:var(--pine);padding-left:.75rem}.row:hover::before{transform:scaleY(1)}
 .row:hover p{color:var(--pine)}
 /* rules */
 .rules{background:var(--paper);color:var(--pine)}
-.rules h2{text-shadow:none;color:var(--pine)}
+.rules h2{text-shadow:none;color:var(--pine);transform:skewX(-8deg) rotate(-1deg)}
 .rl{max-width:1200px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2rem 3rem}
 .rl h3{font:400 clamp(2.4rem,5vw,3.4rem)/.9 "League Gothic","Impact",sans-serif;text-transform:uppercase;margin-bottom:.5rem;letter-spacing:-.02em;transform:skewX(-7deg)}
 .rl p{max-width:28ch;font-size:1.15rem;line-height:1.35;letter-spacing:.01em}
@@ -87,7 +92,7 @@ footer{display:flex;flex-wrap:wrap;gap:1rem 2rem;justify-content:space-between;b
   h1{font-size:clamp(4.2rem,22vw,10rem)}
   .sub{font-size:clamp(1.4rem,5vw,2rem)}
   .tag{font-size:.95rem;padding:.4rem .8rem}
-  .mq{margin:0 -1rem;padding:.5rem 0}
+  .mq{margin:0 -1rem;padding:.55rem 0}.mq-wrap{overflow:hidden}
   .mq span{font-size:1.15rem}
   .about p.big{font-size:clamp(1.9rem,6.5vw,3.2rem)}
   .about p.s{font-size:1.2rem}
@@ -125,8 +130,7 @@ header h1{animation:slideInLeft 1s cubic-bezier(.22,1,.36,1) both}
 .st .d:nth-child(2){animation-delay:.1s}
 .st .d:nth-child(3){animation-delay:.2s}
 .st .d:nth-child(4){animation-delay:.3s}
-.row{transition:background .25s,color .25s,transform .25s}
-.row:hover{transform:translateX(6px)}
+
 .btn{transition:transform .2s,box-shadow .2s,background .2s}
 .btn:hover{transform:rotate(1deg) translate(3px,3px);box-shadow:2px 2px 0 var(--pine)}
 .rl > div{transition:transform .3s}
@@ -154,7 +158,6 @@ h1{filter:drop-shadow(0 0 40px rgba(226,255,31,.15))}
 .about{border:3px solid rgba(226,255,31,.25);border-radius:4px}
 .about p.big b{box-shadow:3px 3px 0 var(--pine)}
 .row{border-top:3px solid var(--acid);transition:background .25s,color .25s,transform .25s,padding .25s}
-.row:hover{background:var(--acid);color:var(--pine);padding-left:.6rem;box-shadow:inset 4px 0 0 var(--pine)}
 .row:hover p{color:var(--pine)}
 .rl > div{background:rgba(244,247,200,.15);padding:1.4rem 1.2rem;border:2px solid transparent;border-radius:2px;transition:transform .3s,border-color .3s,background .3s,box-shadow .3s}
 .rl > div:hover{transform:translateY(-6px) rotate(-.5deg);border-color:var(--pine);background:rgba(244,247,200,.35);box-shadow:6px 6px 0 var(--pine)}
@@ -175,6 +178,10 @@ footer a:hover{color:var(--paper)}
 .st{position:relative;overflow:hidden}
 .st::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-12deg,transparent,transparent 40px,rgba(226,255,31,.03) 40px,rgba(226,255,31,.03) 42px);pointer-events:none}
 
+
+.wd{background:transparent;color:inherit;padding:.02em .08em;margin:0 -.02em;transition:background .25s,color .25s;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.wd.on{background:var(--acid);color:var(--pine)}
+
 /* typographic polish */
 .row p{font-size:1.15rem;line-height:1.35;letter-spacing:.01em}
 footer{font:500 .9rem/1.3 "Barlow Condensed",sans-serif;letter-spacing:.04em;text-transform:uppercase}
@@ -182,11 +189,18 @@ footer a{text-decoration:underline;text-underline-offset:3px}
 .btn{letter-spacing:.06em}
 .nav-logo{letter-spacing:.08em}
 
+
+.dates-chip{margin-top:1.1rem;display:inline-block;font:700 1rem/1.2 "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--pine);background:var(--paper);padding:.55rem 1rem;transform:rotate(1deg);box-shadow:4px 4px 0 var(--acid)}
+.section-label{display:inline-block;font:700 .85rem/1 "Barlow Condensed",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--pine);background:var(--acid);padding:.35rem .7rem;margin-bottom:1rem;transform:skewX(-6deg)}
+.cta .btn{font-size:1.25rem;padding:1.2rem 2.4rem}
+.cta .btn-row{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:2.2rem}
+.strip{background:repeating-linear-gradient(90deg,var(--acid) 0 16px,var(--pine) 16px 32px);height:48px;opacity:.9}
+
 /* nav */
-.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:.7rem clamp(1rem,4vw,2.5rem);padding-top:calc(.7rem + env(safe-area-inset-top,0px));background:rgba(7,63,16,.55);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border-bottom:2px solid rgba(226,255,31,.7);transform:translateY(0);transition:background .25s,border-color .25s}
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.85rem clamp(1rem,4vw,2.5rem);padding-top:calc(.85rem + env(safe-area-inset-top,0px));background:rgba(7,63,16,.72);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border-bottom:3px solid var(--acid);box-shadow:0 8px 32px rgba(0,0,0,.35)}
 .nav-logo{font:700 1.15rem "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.04em;color:var(--acid);text-decoration:none}
 .nav-links{display:flex;gap:.8rem;align-items:center}
-.nav-links a{font:700 1rem "Barlow Condensed",sans-serif;text-transform:uppercase;text-decoration:none;padding:.45rem 1rem;border:2px solid var(--acid);color:var(--acid);transition:background .15s,color .15s,transform .15s}
+.nav-links a{font:700 1.05rem "Barlow Condensed",sans-serif;text-transform:uppercase;text-decoration:none;padding:.55rem 1.15rem;border:2.5px solid var(--acid);color:var(--acid);letter-spacing:.06em;transition:background .15s,color .15s,transform .15s,box-shadow .15s}
 .nav-links a:hover{background:var(--acid);color:var(--pine);transform:rotate(-1deg)}
 .nav-links a.join{background:var(--acid);color:var(--pine)}
 .nav-links a.join:hover{background:var(--paper);border-color:var(--paper)}
@@ -221,6 +235,7 @@ header{background:linear-gradient(rgba(7,63,16,.35),rgba(7,63,16,.35)),var(--bg-
     <div>
       <p class="sub">Online web dev hackathon</p>
       <p class="tag m">Build hot. Ship smoked.</p>
+      <p class="dates-chip">7 – 14 November 2026 · Theme on day one</p>
     </div>
     <svg class="fish" viewBox="0 0 300 180" role="img" aria-label="A grumpy fish smoking a cigarette">
       <path d="M10 70 L70 98 L10 150Z" fill="#E2FF1F"/>
@@ -233,12 +248,17 @@ header{background:linear-gradient(rgba(7,63,16,.35),rgba(7,63,16,.35)),var(--bg-
   </div>
 </header>
 
-<div class="mq" aria-hidden="true"><div>
-  <span>Ideas ✦ Code ✦ Chaos ✦ Ideas ✦ Code ✦ Chaos ✦ Ideas ✦ Code ✦ Chaos ✦ </span><span>Ideas ✦ Code ✦ Chaos ✦ Ideas ✦ Code ✦ Chaos ✦ Ideas ✦ Code ✦ Chaos ✦ </span>
-</div></div>
+<div class="mq-wrap" aria-hidden="true">
+  <div class="mq"><div class="mt">
+    <span>Ideas ✦ Code ✦ Chaos ✦ Build Hot ✦ Ship Smoked ✦ Ideas ✦ Code ✦ Chaos ✦ </span><span>Ideas ✦ Code ✦ Chaos ✦ Build Hot ✦ Ship Smoked ✦ Ideas ✦ Code ✦ Chaos ✦ </span>
+  </div></div>
+  <div class="mq mq-rev"><div class="mt">
+    <span>7–14 Nov ✦ Any Stack ✦ Teams of 4 ✦ Theme Drops Day One ✦ 7–14 Nov ✦ </span><span>7–14 Nov ✦ Any Stack ✦ Teams of 4 ✦ Theme Drops Day One ✦ 7–14 Nov ✦ </span>
+  </div></div>
+</div>
 
 <div class="abw" style="padding:clamp(1rem,5vw,4rem)"><section class="about">
-  <p class="big reveal">Seven days. Any stack. One browser tab is all you need to <b>ship something strange</b> and a little bit great.</p>
+  <p class="big reveal">Seven days. Any stack. One browser tab is all you need to <span class="wd">ship something strange</span> and a little bit great.</p>
   <p class="s reveal reveal-d1">Smoking Fish is a fully online web dev hackathon for people who like their ideas a bit smoky. Join solo or with a team of up to four, build a working website or web app from scratch, and share it with the community. Beginners and veterans are both welcome.</p>
 </section></div>
 
@@ -248,8 +268,8 @@ header{background:linear-gradient(rgba(7,63,16,.35),rgba(7,63,16,.35)),var(--bg-
 
 <section class="sch">
   <div class="sched">
-    <h2 class="d">The schedule</h2>
-    <p style="margin:-1.5rem 0 2rem;font-weight:700;font-size:1.6rem">7 – 14 November. Theme drops on day one.</p>
+    <span class="section-label">Timeline</span><h2 class="d">The schedule</h2>
+    <p style="margin:-1.5rem 0 2rem;font-weight:700;font-size:1.6rem">7 – 14 November · Theme drops on day one</p>
     <div class="row reveal"><span class="t">7 Nov</span><h3>Kickoff</h3><p>Theme is announced live. Find a team in the chat and start sketching.</p></div>
     <div class="row reveal reveal-d1"><span class="t">7–14 Nov</span><h3>Build</h3><p>Write code, break things, fix them. Mentors answer questions in the help channels all week.</p></div>
     <div class="row reveal reveal-d2"><span class="t">14 Nov</span><h3>Submit</h3><p>Push your repo, share a live link and a short walkthrough video. Judges and the community vote on the winners online.</p></div>
@@ -257,7 +277,7 @@ header{background:linear-gradient(rgba(7,63,16,.35),rgba(7,63,16,.35)),var(--bg-
 </section>
 
 <section class="rules">
-  <h2 class="d">Ground rules</h2>
+  <span class="section-label">Play fair</span><h2 class="d">Ground rules</h2>
   <div class="rl">
     <div class="reveal"><h3>Any stack</h3><p>React, Svelte, plain HTML or something you made up last night. Use what you like.</p></div>
     <div class="reveal reveal-d1"><h3>Fresh code</h3><p>Start your project after kickoff. Libraries and open-source tools are fair game.</p></div>
@@ -266,13 +286,18 @@ header{background:linear-gradient(rgba(7,63,16,.35),rgba(7,63,16,.35)),var(--bg-
   </div>
 </section>
 
+<div class="mq-wrap" aria-hidden="true" style="margin:0">
+  <div class="mq"><div class="mt">
+    <span>Register free ✦ Join the chat ✦ Ship smoked ✦ Register free ✦ Join the chat ✦ </span><span>Register free ✦ Join the chat ✦ Ship smoked ✦ Register free ✦ Join the chat ✦ </span>
+  </div></div>
+</div>
 <section class="cta">
   <div class="check strip" aria-hidden="true"></div>
   <h2 class="d" style="margin:3rem 0 0;font-size:clamp(4rem,22vw,20rem)">Some ideas smell better than others.</h2>
-  <div style="display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center;margin-top:2.5rem">
-    <a class="btn" href="https://luma.com/0dng23ey" target="_blank" rel="noopener" style="margin-top:0">Register on Luma</a>
-    <a class="btn" href="https://smokingfish.zite.so" target="_blank" rel="noopener" style="margin-top:0">Register on Fillout</a>
-    <a class="btn" href="https://chat.whatsapp.com/FrOIrzhMqYE5vDkoo5YKRW" target="_blank" rel="noopener" style="margin-top:0">Join WhatsApp</a>
+  <div class="btn-row">
+    <a class="btn" href="https://luma.com/0dng23ey" target="_blank" rel="noopener" style="margin-top:0">Register · Luma</a>
+    <a class="btn" href="https://smokingfish.zite.so" target="_blank" rel="noopener" style="margin-top:0">Register · Fillout</a>
+    <a class="btn" href="https://chat.whatsapp.com/FrOIrzhMqYE5vDkoo5YKRW" target="_blank" rel="noopener" style="margin-top:0;background:var(--paper)">Join WhatsApp</a>
   </div>
   <p style="margin-top:2rem;font-weight:700;font-size:1.3rem;opacity:.9">Info · <a href="https://wa.me/918750955845" target="_blank" rel="noopener">WhatsApp +91 87509 55845</a></p>
 </section>
@@ -284,19 +309,54 @@ header{background:linear-gradient(rgba(7,63,16,.35),rgba(7,63,16,.35)),var(--bg-
 
 <script>
 (function(){
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(rm){
+    document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in')});
+    document.querySelectorAll('.wd').forEach(function(el){el.classList.add('on')});
     return;
   }
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.classList.add('in');
-        io.unobserve(e.target);
-      }
+  /* reveal on scroll */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
     });
   },{threshold:0.15, rootMargin:'0px 0px -40px 0px'});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  /* word highlight when about is in view */
+  var wds = document.querySelectorAll('.wd');
+  if(wds.length){
+    var wio = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          e.target.querySelectorAll('.wd').forEach(function(w,i){
+            setTimeout(function(){ w.classList.add('on'); }, 120 + i*80);
+          });
+          wio.unobserve(e.target);
+        }
+      });
+    },{threshold:0.35});
+    var about = document.querySelector('.about');
+    if(about) wio.observe(about);
+  }
+
+  /* marquees speed up with scroll (portfolio-inspired) */
+  var mts = document.querySelectorAll('.mt');
+  if(mts.length){
+    var anims = [], ly = scrollY, vel = 0, sg = 1;
+    setTimeout(function(){
+      anims = Array.prototype.map.call(mts, function(t){ return t.getAnimations && t.getAnimations()[0]; }).filter(Boolean);
+    }, 500);
+    (function lp(){
+      var y = scrollY;
+      vel = vel * 0.9 + (y - ly) * 0.1;
+      ly = y;
+      if(Math.abs(vel) > 0.6) sg = vel > 0 ? 1 : -1;
+      var rate = sg * (1 + Math.min(8, Math.abs(vel) * 0.7));
+      anims.forEach(function(a){ try{ a.playbackRate = rate; }catch(e){} });
+      requestAnimationFrame(lp);
+    })();
+  }
 })();
 </script>
 </body>
